@@ -1,16 +1,9 @@
-import { 
-    CommandNode,
-    StringReader,
-    CommandContextBuilder,
-    CommandContext,
-    Suggestions,
-    SuggestionsBuilder
-} from '../internal';
+import { CommandContext, CommandContextBuilder, CommandNode, StringReader, Suggestions, SuggestionsBuilder } from '../internal';
 
 export class RootCommandNode<S> extends CommandNode<S> {
 
     constructor() {
-        super(null, c => true, null, c => null, false);
+        super(null, c => Promise.resolve(true), null, c => null, false);
     }
 
     parse(reader: StringReader, contextBuilder: CommandContextBuilder<S>): void {

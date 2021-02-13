@@ -1,10 +1,4 @@
-import {
-    CommandNode,
-    RootCommandNode,
-    Command,
-    Predicate,
-    CommandContext
-} from "../internal";
+import { Command, CommandContext, CommandNode, Predicate, RootCommandNode } from '../internal';
 
 export type RedirectModifier<S> = (context: CommandContext<S>) => S | S[];
 
@@ -18,7 +12,7 @@ export abstract class ArgumentBuilder<S, T extends ArgumentBuilder<S, T>> {
 
     constructor() {
         this.arguments = new RootCommandNode();
-        this.requirement = s => true;
+        this.requirement = s => Promise.resolve(true);
     }
 
     abstract getThis(): T;
