@@ -1,15 +1,6 @@
 import {
-    RootCommandNode,
-    LiteralCommandNode,
-    StringReader,
-    LiteralArgumentBuilder,
-    CommandContextBuilder,
-    CommandNode,
-    ParseResults,
-    CommandSyntaxError,
-    Suggestions,
-    SuggestionsBuilder
-} from "./internal";
+    CommandContextBuilder, CommandNode, CommandSyntaxError, LiteralArgumentBuilder, LiteralCommandNode, ParseResults, RootCommandNode, StringReader, Suggestions, SuggestionsBuilder
+} from './internal';
 
 export class CommandDispatcher<S> {
 
@@ -31,7 +22,7 @@ export class CommandDispatcher<S> {
         return build;
     }
 
-    execute(parse: ParseResults<S> | string, source: S): number {
+    async execute(parse: ParseResults<S> | string, source: S): Promise<number> {
         if (typeof(parse) === "string") {
             parse = this.parse(new StringReader(parse), source);
         }
@@ -81,7 +72,7 @@ export class CommandDispatcher<S> {
                 } else if (context.getCommand()) {
                     foundCommand = true;
                     try {
-                        const value = context.getCommand()(context);
+                        const value = await context.getCommand()(context);
                         result += value ? value : 1;
                         successfulForks++;
                     } catch (e) {
